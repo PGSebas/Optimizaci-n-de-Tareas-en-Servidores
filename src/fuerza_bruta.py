@@ -110,3 +110,44 @@ def fuerza_bruta(tareas, num_servidores):
             mejor_tiempo = tiempo_total
             mejor_asignacion = asignacion_final
 
+    # -----------------------------------------
+    # MOSTRAR RESULTADOS
+    # -----------------------------------------
+
+    print("\nMEJOR ASIGNACIÓN:\n")
+
+    if mejor_asignacion is None:
+
+        print("No se encontró una solución válida.")
+        return
+
+    for tarea in mejor_asignacion:
+
+        nombre = tarea[0]
+        prioridad = tarea[1]
+        servidor = tarea[2]
+
+        print(f"{nombre}")
+        print(f"  Prioridad: {prioridad}")
+        print(f"  Servidor: {servidor + 1}\n")
+
+    print("Tiempo total mínimo:", mejor_tiempo)
+
+
+# -----------------------------------------
+# CASO DE PRUEBA GRANDE
+# -----------------------------------------
+
+tareas = [
+    ("T1", 3, 1, []),
+    ("T2", 5, 2, ["T1"]),
+    ("T3", 2, 1, ["T1"]),
+    ("T4", 4, 3, ["T2"]),
+    ("T5", 6, 2, ["T2", "T3"]),
+    ("T6", 3, 1, ["T3"]),
+    ("T7", 7, 2, ["T4", "T5"])
+]
+
+num_servidores = 2
+
+fuerza_bruta(tareas, num_servidores)
