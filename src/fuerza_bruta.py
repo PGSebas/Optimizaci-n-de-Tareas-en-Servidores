@@ -38,3 +38,75 @@ def obtener_tareas_disponibles(tareas, ejecutadas):
     return disponibles
 
 
+# -----------------------------------------
+# FUERZA BRUTA
+# -----------------------------------------
+
+def fuerza_bruta(tareas, num_servidores):
+
+    mejor_tiempo = float('inf')
+    mejor_asignacion = None
+
+    # Generar TODAS las asignaciones posibles
+    for asignacion in product(range(num_servidores), repeat=len(tareas)):
+
+        cargas = [0] * num_servidores
+        ejecutadas = set()
+
+        asignacion_final = []
+
+        solucion_valida = True
+
+        # -----------------------------------------
+        # Ejecutar tareas paso a paso
+        # -----------------------------------------
+
+        for servidor in asignacion:
+
+            # Obtener tareas disponibles
+            disponibles = obtener_tareas_disponibles(
+                tareas,
+                ejecutadas
+            )
+
+            # Si no hay tareas disponibles
+            if not disponibles:
+                break
+
+            # Ordenar por prioridad
+            disponibles.sort(key=lambda x: x[2])
+
+            # Elegir la tarea de mayor prioridad
+            tarea = disponibles[0]
+
+            nombre = tarea[0]
+            tiempo = tarea[1]
+            prioridad = tarea[2]
+
+            # Evitar repetir tareas
+            if nombre in ejecutadas:
+                solucion_valida = False
+                break
+
+            # Ejecutar tarea
+            cargas[servidor] += tiempo
+
+            ejecutadas.add(nombre)
+
+            asignacion_final.append(
+                (nombre, prioridad, servidor)
+            )
+
+        # Verificar si se ejecutaron TODAS las tareas
+        if len(ejecutadas) != len(tareas):
+            continue
+
+        # Calcular tiempo total
+        tiempo_total = max(cargas)
+
+        # Guardar mejor solución
+        if tiempo_total < mejor_tiempo:
+
+            mejor_tiempo = tiempo_total
+            mejor_asignacion = asignacion_final
+
