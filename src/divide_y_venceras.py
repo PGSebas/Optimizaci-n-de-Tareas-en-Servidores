@@ -121,3 +121,44 @@ def divide_y_venceras(
         "asignaciones": asignaciones_finales
     }
 
+
+# -----------------------------------------
+# CASO DE PRUEBA
+# -----------------------------------------
+
+tareas = [
+    ("T1", 3, 1, []),
+    ("T2", 5, 2, ["T1"]),
+    ("T3", 2, 1, ["T1"]),
+    ("T4", 4, 3, ["T2"]),
+    ("T5", 6, 2, ["T2", "T3"]),
+    ("T6", 3, 1, ["T3"])
+]
+
+num_servidores = 2
+
+resultado = divide_y_venceras(
+    tareas,
+    num_servidores
+)
+
+# -----------------------------------------
+# MOSTRAR RESULTADOS
+# -----------------------------------------
+
+print("\nASIGNACIÓN FINAL:\n")
+
+for tarea in resultado["asignaciones"]:
+
+    nombre = tarea[0]
+    prioridad = tarea[1]
+    servidor = tarea[2]
+
+    print(f"{nombre}")
+    print(f"  Prioridad: {prioridad}")
+    print(f"  Servidor: {servidor + 1}\n")
+
+print(
+    "Tiempo total:",
+    max(resultado["cargas"])
+)
