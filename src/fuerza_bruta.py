@@ -15,3 +15,26 @@ def dependencias_cumplidas(tarea, ejecutadas):
     return True
 
 
+# -----------------------------------------
+# Obtiene tareas disponibles
+# -----------------------------------------
+
+def obtener_tareas_disponibles(tareas, ejecutadas):
+
+    disponibles = []
+
+    for tarea in tareas:
+
+        nombre = tarea[0]
+
+        # Ignorar tareas ya ejecutadas
+        if nombre in ejecutadas:
+            continue
+
+        # Verificar dependencias
+        if dependencias_cumplidas(tarea, ejecutadas):
+            disponibles.append(tarea)
+
+    return disponibles
+
+
